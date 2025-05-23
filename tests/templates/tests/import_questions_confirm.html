@@ -1,0 +1,25 @@
+{% extends "tests/base.html" %}
+{% load static %}
+{% block title %}Подтверждение импорта вопросов{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Подтверждение импорта вопросов</h1>
+  <p><strong>Предмет из файла:</strong> {{ subject }}</p>
+  <p><strong>Раздел из файла:</strong> {{ section }}</p>
+  <p><strong>Количество вопросов для импорта:</strong> {{ count }}</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="subject">Изменить предмет (если требуется):</label>
+      <input type="text" name="subject" id="subject" class="form-control" value="{{ subject }}">
+    </div>
+    <div class="form-group">
+      <label for="section">Изменить раздел (если требуется):</label>
+      <input type="text" name="section" id="section" class="form-control" value="{{ section }}">
+    </div>
+    <button type="submit" name="confirm" class="btn btn-success">Подтвердить и импортировать</button>
+  </form>
+</div>
+{% endblock %}

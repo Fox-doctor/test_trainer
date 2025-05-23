@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Удалить вопрос</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        a, button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Удалить вопрос</h1>
+        <p>Вы уверены, что хотите удалить вопрос:</p>
+        <p><strong>{{ question.question_text }}</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Да, удалить</button>
+            <a href="{% url 'question_list' %}">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Выбор теста{% endblock %}
+
+{% block content %}
+  <h1>Выберите тест</h1>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+        <button type="submit" name="test_mode" value="control" class="btn">
+            <i class="fas fa-play"></i> Контрольный тест
+        </button>
+        <button type="submit" name="test_mode" value="training" class="btn">
+            <i class="fas fa-graduation-cap"></i> Тренажёрный тест
+        </button>
+    </div>
+    </form>
+
+{% endblock %}

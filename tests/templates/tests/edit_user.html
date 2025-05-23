@@ -1,0 +1,12 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Редактировать пользователя{% endblock %}
+
+{% block content %}
+    <h1>Редактирование пользователя: {{ user_obj.username }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Сохранить изменения</button>
+    </form>
+{% endblock %}

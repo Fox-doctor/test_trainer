@@ -1,0 +1,90 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Тренажёрный тест{% endblock %}
+
+{% block content %}
+<div class="container my-4 text-start" style="max-width: 900px;">
+    <h1 class="mb-3">Тренажёрный тест</h1>
+    <p>Вопрос {{ current_index }} из {{ total_questions }}</p>
+
+    <div class="mb-4">
+        <p><strong>{{ question.question_text }}</strong></p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <!-- Вариант 1 -->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="opt1" value="1"
+                    {% if chosen_answer == "1" %}checked="checked"{% endif %}{% if feedback %} disabled="disabled"{% endif %}>
+                <label class="form-check-label {% if feedback and question.correct_option == 1 %}text-success{% endif %}" for="opt1">
+                    {{ question.option1 }}
+                </label>
+            </div>
+            <!-- Вариант 2 -->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="opt2" value="2"
+                    {% if chosen_answer == "2" %}checked="checked"{% endif %}{% if feedback %} disabled="disabled"{% endif %}>
+                <label class="form-check-label {% if feedback and question.correct_option == 2 %}text-success{% endif %}" for="opt2">
+                    {{ question.option2 }}
+                </label>
+            </div>
+            <!-- Вариант 3 -->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="opt3" value="3"
+                    {% if chosen_answer == "3" %}checked="checked"{% endif %}{% if feedback %} disabled="disabled"{% endif %}>
+                <label class="form-check-label {% if feedback and question.correct_option == 3 %}text-success{% endif %}" for="opt3">
+                    {{ question.option3 }}
+                </label>
+            </div>
+            <!-- Вариант 4 -->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="opt4" value="4"
+                    {% if chosen_answer == "4" %}checked="checked"{% endif %}{% if feedback %} disabled="disabled"{% endif %}>
+                <label class="form-check-label {% if feedback and question.correct_option == 4 %}text-success{% endif %}" for="opt4">
+                    {{ question.option4 }}
+                </label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {% if feedback %}
+                <p>
+                    {% if feedback == "Верно!" %}
+                        <span class="text-success"><strong>{{ feedback }}</strong></span>
+                    {% else %}
+                        <span class="text-danger"><strong>{{ feedback }}</strong></span>
+                    {% endif %}
+                </p>
+            {% endif %}
+            <div style="display: flex; gap: 10px;">
+                {% if not feedback %}
+                    <button type="submit" name="check" value="check" class="btn btn-primary">
+                        Проверить ответ
+                    </button>
+                {% else %}
+                    {% if current_index == total_questions %}
+                        <button type="submit" name="next" value="next" class="btn btn-primary" disabled="disabled">
+                            Следующий вопрос
+                        </button>
+                    {% else %}
+                        <button type="submit" name="next" value="next" class="btn btn-primary">
+                            Следующий вопрос
+                        </button>
+                    {% endif %}
+                {% endif %}
+                <button type="submit" name="defer" value="defer" class="btn btn-secondary" {% if feedback %}disabled="disabled"{% endif %}>
+                    Вернуться к вопросу позже
+                </button>
+            </div>
+        </div>
+    </form>
+
+    {% if current_index == total_questions and feedback %}
+        <div class="mt-4">
+            <a href="{% url 'training_results' %}" class="btn btn-success">Показать результат теста</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

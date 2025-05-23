@@ -1,0 +1,11 @@
+{% extends "tests/base.html" %}
+{% load static %}
+{% block title %}Импорт завершён{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Импорт вопросов завершён</h1>
+  <p>{{ message }}</p>
+  <a href="{% url 'question_list' %}" class="btn btn-primary">Вернуться к списку вопросов</a>
+</div>
+{% endblock %}

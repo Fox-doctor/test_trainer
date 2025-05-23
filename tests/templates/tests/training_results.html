@@ -1,0 +1,27 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Результаты тренажёрного теста{% endblock %}
+
+{% block content %}
+<div class="container my-4 text-start" style="max-width: 900px;">
+    <h1 class="mb-3">Результаты тренажёрного теста</h1>
+    <ul class="list-group">
+        {% for result in results %}
+            <li class="list-group-item">
+                <p><strong>{{ forloop.counter }}. {{ result.question_text }}</strong></p>
+                <p>Ваш ответ: <span class="{% if result.is_correct %}text-success{% else %}text-danger{% endif %}">
+                    {{ result.selected_text }}
+                </span></p>
+                {% if not result.is_correct %}
+                    <p>Правильный ответ: <span class="text-success">{{ result.correct_text }}</span></p>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li class="list-group-item">Нет ответов.</li>
+        {% endfor %}
+    </ul>
+    <div class="mt-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на главную</a>
+    </div>
+</div>
+{% endblock %}

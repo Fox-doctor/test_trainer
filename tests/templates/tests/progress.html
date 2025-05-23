@@ -1,0 +1,89 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Статистика и Прогресс{% endblock %}
+
+{% block content %}
+  <h1>Статистика и Прогресс</h1>
+
+  <!-- Форма для выбора предмета и раздела -->
+<form method="get">
+    <label for="subject">Предмет:</label>
+    <select name="subject" id="subject">
+        {% for key, label in subject_choices %}
+            <option value="{{ label }}" {% if label == subject %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="section">Раздел:</label>
+    <select name="section" id="section">
+        {% for key, label in section_choices %}
+            <option value="{{ label }}" {% if label == section %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn">
+        <i class="fas fa-chart-bar"></i> Показать статистику
+    </button>
+
+</div>
+
+</form>
+
+
+  <h2>Общие показатели для выбранного предмета и раздела</h2>
+  <p><strong>Всего тестов пройдено:</strong> {{ total_tests }}</p>
+  <p><strong>Средний балл:</strong> {{ avg_score|floatformat:1 }}</p>
+  <p><strong>Лучший результат:</strong> {{ best_score }}</p>
+  <p><strong>Худший результат:</strong> {{ worst_score }}</p>
+
+  <h2>График прогресса</h2>
+  <canvas id="progressChart"></canvas>
+
+  <!-- Подключаем Chart.js через CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+      // Преобразуем JSON-данные в объект JavaScript
+      const progressData = {{ progress_data|safe }};
+
+      // Извлекаем даты и баллы
+      const labels = progressData.map(item => new Date(item.date).toLocaleDateString());
+      const scores = progressData.map(item => item.score);
+
+      const ctx = document.getElementById('progressChart').getContext('2d');
+      new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Баллы тестов',
+                  data: scores,
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  fill: true,
+                  tension: 0.1
+              }]
+          },
+          options: {
+              scales: {
+                  x: {
+                      title: {
+                          display: true,
+                          text: 'Дата'
+                      }
+                  },
+                  y: {
+                      title: {
+                          display: true,
+                          text: 'Баллы'
+                      },
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script>
+{% endblock %}

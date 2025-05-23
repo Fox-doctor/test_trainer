@@ -1,0 +1,27 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Результаты теста{% endblock %}
+
+{% block content %}
+    <div class="container my-4 text-start" style="max-width: 900px;">
+        <h1 class="mb-3">Результаты теста</h1>
+        <p>Верных ответов: {{ score }} из {{ total_questions }}</p>
+        <ul class="list-group mb-3">
+            {% for result in results %}
+                <li class="list-group-item mb-2">
+                    <p><strong>{{ forloop.counter }}. {{ result.question_text }}</strong></p>
+                    <p>Правильный ответ: {{ result.correct_text }}</p>
+                    {% if result.is_correct %}
+                        <p class="text-success">Верно!</p>
+                    {% else %}
+                        <p class="text-danger">Неверно!</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <!-- Кнопка для повторного прохождения теста -->
+        <a href="{% url 'select_test' %}" class="btn btn-primary">
+            <i class="fas fa-edit"></i> Пройти тест снова
+        </a>
+    </div>
+{% endblock %}

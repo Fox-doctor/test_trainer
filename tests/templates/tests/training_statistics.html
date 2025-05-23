@@ -1,0 +1,41 @@
+{% extends "tests/base.html" %}
+
+{% block title %}Статистика тренажёрных тестов{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-3">Статистика тренажёрных тестов</h1>
+    {% if stats %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Дата прохождения</th>
+                    <th>Предмет</th>
+                    <th>Раздел</th>
+                    <th>Результат</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in stats %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ stat.taken_at|date:"d.m.Y H:i" }}</td>
+                    <td>{{ stat.subject }}</td>
+                    <td>{{ stat.section }}</td>
+                    <td>{{ stat.score }} / {{ stat.total_questions }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У вас пока нет результатов тренажёрных тестов.</p>
+    {% endif %}
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            <i class="fas fa-home"></i> На главную
+        </a>
+    </div>
+</div>
+{% endblock %}

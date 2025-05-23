@@ -1,0 +1,20 @@
+{% extends "tests/base.html" %}
+{% load static %}
+{% block title %}Импорт вопросов{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Импорт вопросов из текстового файла</h1>
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="import_file">Выберите текстовый файл (*.txt):</label>
+      <input type="file" name="import_file" id="import_file" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Загрузить файл</button>
+  </form>
+</div>
+{% endblock %}

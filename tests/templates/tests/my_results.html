@@ -1,0 +1,36 @@
+{% extends "tests/base.html" %}
+
+{% block title %}
+    Мои результаты тестов
+{% endblock %}
+
+{% block content %}
+    <h1>Мои результаты контрольных тестов</h1>
+
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Предмет</th>
+                    <th>Раздел</th>
+                    <th>Правильных ответов</th>
+                    <th>Всего вопросов</th>
+                    <th>Дата прохождения</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.get_subject_display }}</td>
+                        <td>{{ result.get_section_display }}</td>
+                        <td>{{ result.score }}</td>
+                        <td>{{ result.total_questions }}</td>
+                        <td>{{ result.date|date:"d.m.Y H:i" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У вас еще нет прохождений тестов.</p>
+    {% endif %}
+{% endblock %}
