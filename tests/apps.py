@@ -6,22 +6,22 @@ class TestsConfig(AppConfig):
     name = 'tests'
 
     def ready(self):
-        # Регистрация сигналов (если они нужны)
+        # Импорт сигналов, если они вам нужны
         import tests.signals
 
-        # Программное создание суперпользователя, если его нет.
-        # **Обратите внимание:** этот код выполнится каждый раз при старте приложения,
-        # поэтому рекомендуется использовать его только временно, а после успешного деплоя удалить.
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-        if not User.objects.filter(is_superuser=True).exists():
-            try:
-                # Задайте нужные вам логин, email и пароль
+        # Добавим временный код для создания суперпользователя.
+        # Оборачиваем весь блок в try/except, чтобы избежать ошибки, если таблицы ещё не созданы.
+        try:
+            from django.contrib.auth import get_user_model
+            User = get_user_model()
+            if not User.objects.filter(is_superuser=True).exists():
+                # Создаём суперпользователя
                 User.objects.create_superuser(
                     username='admin',
                     email='admin@example.com',
                     password='adminpassword'
                 )
                 print("Superuser успешно создан.")
-            except Exception as e:
-                print("Ошибка при создании суперпользователя:", e)
+        except Exception as e:
+            # Если возникает ошибка (например, таблицы еще не созданы), пропускаем создание суперпользователя.
+            print("Не удалось создать суперпользователя:", e)
