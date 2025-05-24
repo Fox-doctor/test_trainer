@@ -152,6 +152,7 @@ def select_test(request):
         form = TestSelectionForm()
     return render(request, 'tests/select_test.html', {'form': form})
 
+
 @login_required  # Этот декоратор ограничит доступ к представлению только для авторизованных пользователей.
 def training_test(request):
     # Если переданы параметры subject и section (например, пользователь только что выбрал тест),
