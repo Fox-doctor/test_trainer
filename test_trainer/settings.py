@@ -76,12 +76,24 @@ WSGI_APPLICATION = "test_trainer.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# моя база на локальном сервере
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": BASE_DIR / "db.sqlite3",
+#    }
+#}
+
+#Новая база данных на onerender.com
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+         # Используем внешний URL: он позволит вашему приложению подключаться из Интернета
+         default=os.environ.get('DATABASE_URL', 'postgresql://fox:macZ6Fw92zKVKxvzqgDZHKzojFm9qAso@dpg-d0p0fhbe5dus73dbqieg-a.frankfurt-postgres.render.com/foxdb'),
+         conn_max_age=600,
+         ssl_require=True,
+    )
 }
+
 
 
 # Password validation
