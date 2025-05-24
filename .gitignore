@@ -8,3 +8,7 @@ env/
 *.py[cod]
 .idea/
 *.swp
+test_questions.json
+users.json
+
+

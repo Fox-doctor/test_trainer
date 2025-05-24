@@ -28,9 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t&x*$*-b0i8n!lig__nky
 # DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
-#ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")]
 
 # Application definition
 
@@ -79,22 +77,25 @@ WSGI_APPLICATION = "test_trainer.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # моя база на локальном сервере
-#DATABASES = {
-#    "default": {
-#        "ENGINE": "django.db.backends.sqlite3",
-#        "NAME": BASE_DIR / "db.sqlite3",
-#    }
-#}
-
-#Новая база данных на onerender.com
 DATABASES = {
-    'default': dj_database_url.config(
-         # Используем внешний URL: он позволит вашему приложению подключаться из Интернета
-         default=os.environ.get('DATABASE_URL', 'postgresql://fox:macZ6Fw92zKVKxvzqgDZHKzojFm9qAso@dpg-d0p0fhbe5dus73dbqieg-a.frankfurt-postgres.render.com/foxdb'),
-         conn_max_age=600,
-         ssl_require=True,
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
+
+# На случай, если в будущем понадобится переключаться на базу на Render,
+# можно сделать так, чтобы выбор происходил через переменную окружения.
+# Например, если переменная USE_LOCAL_DB установлена в "False", то используется PostgreSQL:
+#
+# if os.environ.get("USE_LOCAL_DB", "True") == "False":
+#     DATABASES = {
+#         'default': dj_database_url.config(
+#             default=os.environ.get('DATABASE_URL', 'postgresql://fox:macZ6Fw92zKVKxvzqgDZHKzojFm9qAso@dpg-d0p0fhbe5dus73dbqieg-a.frankfurt-postgres.render.com/foxdb'),
+#             conn_max_age=600,
+#             ssl_require=True,
+#         )
+#     }
 
 
 

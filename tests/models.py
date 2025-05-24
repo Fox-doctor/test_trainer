@@ -18,15 +18,14 @@ class TrainingTestResult(models.Model):
         return f"TrainingTestResult(id={self.id}, user={self.user}, score={self.score}/{self.total_questions})"
 
 
-
 # Константы для вариантов выбора
 SUBJECT_CHOICES = [
     ('science', 'Естествознание'),
     ('math', 'Математика'),
-    ('quant', 'Количественная характеристика'),
-    ('kazakh', 'Казахский язык'),
-    ('russian', 'Русский язык'),
-    ('english', 'Английский язык'),
+    ('logic', 'Логика и количественные характеристики'),
+    ('Kazakh', 'Казахский язык'),
+    ('Russian', 'Русский язык'),
+    ('English', 'Английский язык'),
 ]
 
 SECTION_CHOICES = [
@@ -38,7 +37,6 @@ SECTION_CHOICES = [
     ('ecology', 'Экология и экосистемы'),
     ('politics', 'Политическая карта'),
 ]
-
 
 class TestResult(models.Model):
     user = models.ForeignKey(
