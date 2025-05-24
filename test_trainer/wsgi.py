@@ -8,9 +8,10 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 """
 
 import os
-
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "test_trainer.settings")
+# Задаём переменную окружения для настроек Django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_trainer.settings')
 
+# Получаем WSGI-приложение Django
 application = get_wsgi_application()
