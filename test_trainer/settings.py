@@ -24,9 +24,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t&x*$*-b0i8n!lig__nky
 
 # Получаем флаг DEBUG
 # DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
-DEBUG = TRUE
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+#ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -105,6 +106,7 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
+TIME_ZONE = 'Asia/Tashkent'  # или, если вам подходит другой идентификатор, например, 'Asia/Tashkent' или 'Asia/Dushanbe'
 USE_TZ = True
 
 
