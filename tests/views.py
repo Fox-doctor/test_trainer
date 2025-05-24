@@ -131,6 +131,7 @@ def question_delete(request, pk):
 def home(request):
     return render(request, 'tests/home.html')
 
+
 def select_test(request):
     """Представление для выбора предмета и раздела теста."""
     if request.method == 'POST':
@@ -151,7 +152,7 @@ def select_test(request):
         form = TestSelectionForm()
     return render(request, 'tests/select_test.html', {'form': form})
 
-
+@login_required  # Этот декоратор ограничит доступ к представлению только для авторизованных пользователей.
 def training_test(request):
     # Если переданы параметры subject и section (например, пользователь только что выбрал тест),
     # очищаем старые данные и сохраняем выбранные значения в сессии.
@@ -214,6 +215,7 @@ def training_test(request):
     return render(request, 'tests/training_test.html', context)
 
 
+@login_required  # Этот декоратор ограничит доступ к представлению только для авторизованных пользователей.
 def training_results(request):
     # Получаем список всех вопросов теста из сессии
     training_test_ids = request.session.get('training_test_ids', [])
@@ -290,7 +292,7 @@ def training_results(request):
     return render(request, 'tests/training_results.html', context)
 
 
-
+@login_required  # Этот декоратор ограничит доступ к представлению только для авторизованных пользователей.
 def training_statistics(request):
     # Получаем историю результатов тренажёрных тестов текущего пользователя
     if request.user.is_authenticated:
@@ -302,7 +304,7 @@ def training_statistics(request):
     }
     return render(request, 'tests/training_statistics.html', context)
 
-
+@login_required  # Этот декоратор ограничит доступ к представлению только для авторизованных пользователей.
 def test_view(request):
     if request.method == "POST":
         total_questions = 0
