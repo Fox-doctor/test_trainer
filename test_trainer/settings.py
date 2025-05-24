@@ -26,8 +26,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t&x*$*-b0i8n!lig__nky
 # DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
 DEBUG = True
 
-#ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
