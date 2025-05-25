@@ -167,10 +167,17 @@ def training_test(request):
 
     # Если в сессии ещё нет списка вопросов для теста, создаём его.
     if 'training_test_ids' not in request.session:
-        question_ids = list(Question.objects.order_by('?').values_list('id', flat=True)[:20])
+        training_subject = request.session.get('training_subject')
+        training_section = request.session.get('training_section')
+        question_ids = list(
+            Question.objects.filter(subject=training_subject, section=training_section)
+            .order_by('?')
+            .values_list('id', flat=True)[:20]
+        )
         request.session['training_test_ids'] = question_ids
         request.session['training_current_index'] = 0
-        request.session['training_answers'] = {}  # для хранения ответов
+        request.session['training_answers'] = {}  # Для хранения ответов
+
 
     # Последующая логика без изменений...
     question_ids = request.session['training_test_ids']

@@ -25,8 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t&x*$*-b0i8n!lig__nky1928$8c2d2o%r)@fk&c6pdx2wj@t+')
 
 #Получаем флаг DEBUG
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
-#DEBUG = True
+#DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
+DEBUG = True
 
 ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")]
 
@@ -76,6 +76,26 @@ WSGI_APPLICATION = "test_trainer.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+USE_LOCAL_DB = os.getenv("USE_LOCAL_DB", "False") == "True"
+
+
+("""
+if USE_LOCAL_DB:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+        )
+    }
+
+""")
 
 USE_LOCAL_DB = os.getenv("USE_LOCAL_DB", "False") == "True"
 
