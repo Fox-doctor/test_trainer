@@ -11,9 +11,12 @@
         <button type="submit" name="test_mode" value="control" class="btn">
             <i class="fas fa-play"></i> Контрольный тест
         </button>
-        <!--<button type="submit" name="test_mode" value="training" class="btn"> -->
-        <!--    <i class="fas fa-graduation-cap"></i> Тренажёрный тест -->
-        <!-- </button>  -->
+
+        {% if user.is_superuser %}
+        <button type="submit" name="test_mode" value="training" class="btn">
+               <i class="fas fa-graduation-cap"></i> Тренажёрный тест
+        </button>
+
     </div>
     </form>
 
