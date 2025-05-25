@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Получаем секретный ключ
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-t&x*$*-b0i8n!lig__nky1928$8c2d2o%r)@fk&c6pdx2wj@t+')
 
-# Получаем флаг DEBUG
-# DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
-DEBUG = True
+#Получаем флаг DEBUG
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Значение по умолчанию False
+#DEBUG = True
 
 ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")]
 
