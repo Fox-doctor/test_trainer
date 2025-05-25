@@ -155,17 +155,22 @@ def select_test(request):
 
 @login_required  # Этот декоратор ограничит доступ к представлению только для авторизованных пользователей.
 def training_test(request):
-    # Если переданы параметры subject и section (например, пользователь только что выбрал тест),
-    # очищаем старые данные и сохраняем выбранные значения в сессии.
-    if request.GET.get('subject') and request.GET.get('section') and 'training_test_ids' not in request.session:
+    subject = request.GET.get('subject')
+    section = request.GET.get('section')
+    stored_subject = request.session.get('training_subject')
+    stored_section = request.session.get('training_section')
+
+    # Сбрасываем тест, если пришли новые параметры или тест уже не завершён
+    if request.method == 'GET' and subject and section and (
+            stored_subject != subject or stored_section != section):
         request.session.pop('training_test_ids', None)
         request.session.pop('training_current_index', None)
         request.session.pop('training_answers', None)
-        request.session['training_subject'] = request.GET.get('subject')
-        request.session['training_section'] = request.GET.get('section')
+        request.session['training_subject'] = subject
+        request.session['training_section'] = section
         request.session.pop('training_result_saved', None)
 
-    # Если в сессии ещё нет списка вопросов для теста, создаём его.
+    # Если в сессии ещё нет списка вопросов, создаём его
     if 'training_test_ids' not in request.session:
         training_subject = request.session.get('training_subject')
         training_section = request.session.get('training_section')
@@ -176,7 +181,7 @@ def training_test(request):
         )
         request.session['training_test_ids'] = question_ids
         request.session['training_current_index'] = 0
-        request.session['training_answers'] = {}  # Для хранения ответов
+        request.session['training_answers'] = {}
 
 
     # Последующая логика без изменений...
