@@ -76,27 +76,20 @@ WSGI_APPLICATION = "test_trainer.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# моя база на локальном сервере
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+
+USE_LOCAL_DB = os.getenv("USE_LOCAL_DB", "False") == "True"
+
+if USE_LOCAL_DB:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-
-# На случай, если в будущем понадобится переключаться на базу на Render,
-# можно сделать так, чтобы выбор происходил через переменную окружения.
-# Например, если переменная USE_LOCAL_DB установлена в "False", то используется PostgreSQL:
-#
-# if os.environ.get("USE_LOCAL_DB", "True") == "False":
-#     DATABASES = {
-#         'default': dj_database_url.config(
-#             default=os.environ.get('DATABASE_URL', 'postgresql://fox:macZ6Fw92zKVKxvzqgDZHKzojFm9qAso@dpg-d0p0fhbe5dus73dbqieg-a.frankfurt-postgres.render.com/foxdb'),
-#             conn_max_age=600,
-#             ssl_require=True,
-#         )
-#     }
-
+else:
+    DATABASES = {
+        "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    }
 
 
 # Password validation
