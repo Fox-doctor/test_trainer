@@ -157,7 +157,7 @@ def select_test(request):
 def training_test(request):
     # Если переданы параметры subject и section (например, пользователь только что выбрал тест),
     # очищаем старые данные и сохраняем выбранные значения в сессии.
-    if request.GET.get('subject') and request.GET.get('section'):
+    if request.GET.get('subject') and request.GET.get('section') and 'training_test_ids' not in request.session:
         request.session.pop('training_test_ids', None)
         request.session.pop('training_current_index', None)
         request.session.pop('training_answers', None)
