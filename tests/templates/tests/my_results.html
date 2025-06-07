@@ -6,6 +6,11 @@
 
 {% block content %}
     <h1>Мои результаты контрольных тестов</h1>
+    <div class="mt-4 text-center">
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            <i class="fas fa-home"></i> На главную
+        </a>
+    </div>
 
     {% if results %}
         <table>
