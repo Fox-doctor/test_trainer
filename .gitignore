@@ -10,5 +10,6 @@ env/
 *.swp
 test_questions.json
 users.json
+.env
 
 

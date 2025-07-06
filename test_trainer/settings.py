@@ -79,26 +79,6 @@ WSGI_APPLICATION = "test_trainer.wsgi.application"
 
 USE_LOCAL_DB = os.getenv("USE_LOCAL_DB", "False") == "True"
 
-
-("""
-if USE_LOCAL_DB:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-else:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-        )
-    }
-
-""")
-
-USE_LOCAL_DB = os.getenv("USE_LOCAL_DB", "False") == "True"
-
 if USE_LOCAL_DB:
     DATABASES = {
         "default": {
